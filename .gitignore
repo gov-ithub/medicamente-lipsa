@@ -1,0 +1,10 @@
+/.idea
+/asgard/vendor
+node_modules/
+nbproject/
+_notes/
+.env
+.DS_Store
+Thumbs.db
+composer.phar
+.vagrant

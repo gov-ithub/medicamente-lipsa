@@ -1,0 +1,12 @@
+/*
+!.gitignore
+!Meds
+!User/
+User/*
+!User/Resources/
+User/Resources/*
+!User/Resources/views/
+User/Resources/views/*
+!User/Resources/views/public/
+User/Resources/views/public/*
+!User/Resources/views/public/login.blade.php
