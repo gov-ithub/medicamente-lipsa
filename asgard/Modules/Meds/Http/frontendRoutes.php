@@ -12,6 +12,9 @@ $router->group(['priority' => -10], function (Router $router) {
 
 	$router->get('/neeligibil', ['as' => 'public.respinse', 'uses' => 'PublicController@falseReports']);
 	
+	$router->get('/search', ['as' => 'meds.search', 'uses' => 'PublicController@search']);
+	
 	$router->get('/test_r', ['as' => 'public.test1', 'uses' => 'PublicController@test1']);
+	$router->get('/test_date', ['as' => 'public.test-date', 'uses' => 'PublicController@test2']);
 });
 

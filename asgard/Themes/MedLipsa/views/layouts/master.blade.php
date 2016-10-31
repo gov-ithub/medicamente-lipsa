@@ -8,7 +8,8 @@
 @yield('content')
 @include('partials.footer')
 
+{!! Theme::script('js/vendors.js') !!}
+{!! Theme::script('js/app.min.js?') !!}
 @yield('scripts')
-
 </body>
 </html>

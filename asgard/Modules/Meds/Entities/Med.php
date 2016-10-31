@@ -2,10 +2,15 @@
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Laracasts\Presenter\PresentableTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use Modules\Meds\Presenters\MedPresenter;
 
 class Med extends Model
 {
 //    use Translatable;
+	use PresentableTrait, SearchableTrait;
+	
 	public static $packageList =  [
 					1 => "Fiolă",
 					2 => "Capsulă",
@@ -34,6 +39,7 @@ class Med extends Model
 				];
 	
     protected $table = 'meds__meds';
+	protected $presenter = MedPresenter::class;
 //    public $translatedAttributes = [];
 	protected $fillable = [
 		'name',
@@ -48,7 +54,21 @@ class Med extends Model
 		'country',
 		'created_at',
 	];
-		
+	
+	protected $searchable = [
+        'columns' => [
+			'name' => 5,
+			'active_sub' => 4,
+			'manufacturer' => 2,
+			'reply.cause' => 1,
+			'reply.action' => 1,
+        ],
+        'joins' => [
+            'meds__replies as reply' => ['meds__meds.reply_id', 'reply.id'],
+//            'meds__replies as reply' => ['meds__meds.id','meds__replies.med_id'],
+        ],
+    ];
+	
 	public function patient() {
 		return $this->belongsTo(Patient::class, 'patient_id');
     }

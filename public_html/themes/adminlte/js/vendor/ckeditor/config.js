@@ -37,4 +37,9 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 	config.allowedContent = true;
 	config.filebrowserBrowseUrl =  Asgard.mediaGridCkEditor;
+	
+	config.entities  = false;
+	config.basicEntities = false;
+	config.entities_greek = false;
+	config.entities_latin = false;
 };

@@ -21,16 +21,16 @@ class PublicController extends BasePublicController
 	public function __construct(Mailer $mailer) {
         parent::__construct();
 		$this->mailer = $mailer;
+		
+		view()->share('medPackage', Med::$packageList);
     }
 
 	public function index() {
 		$patients = Patient::where('status', 1)
 						->orderBy('created_at', 'desc')
-							->get();
+							->take(10)->get();
 
-		return view('meds.index', [
-				'medPackage' => Med::$packageList,
-			])->with(compact('patients'));
+		return view('meds.index')->with(compact('patients'));
 	}
 	
 	public function falseReports() {
@@ -75,6 +75,26 @@ class PublicController extends BasePublicController
 		return view('meds.cerere-confirm');
 	}
 	
+	public function search(Request $request) {
+		if(isset($request->all()['q'])) {
+			preg_match_all("/\b\w{3}\w*\b/", $queryString = trim($request->all()['q']), $search_words);
+			$queryWords = implode(' ', $search_words[0]);
+
+			if(trim($queryWords)) {
+				$meds = Med::search($queryWords, 0)
+							->with(['patient', 'publicReply'])
+								->orderBy('relevance', 'desc')
+								->orderBy('created_at', 'desc')
+									->get();
+			}
+		} else {
+			$meds = null;
+			$queryString = '';
+		}
+		return view($request->ajax() ? 'meds.partials.search_results' : 'meds.search')->with(compact('meds', 'queryString'));
+	}
+	
+	//copy replies from prev. version
 	public function test1(){
 		$replies = \Modules\Meds\Entities\Reply1::all();
 		$skipped = [];
@@ -96,6 +116,15 @@ class PublicController extends BasePublicController
 				$skipped[] = $r;
 		}
 		dd($skipped);
+	}
+	
+	public function test2() {
+		$p = Patient::find(336);
+		$ddl = $p->created_at->copy()->addWeekdays(4+7)
+				->hour($p->created_at->hour)
+				->minute($p->created_at->minute)
+				->second($p->created_at->second);
+		dd($ddl, $p->created_at);
 	}
 	
 	private function sendNotification($patient){

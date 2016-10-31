@@ -27,7 +27,8 @@
     "asgardcms/flatly-theme": "~1.0",
     "asgardcms/adminlte-theme": "~1.0",
     "greggilbert/recaptcha": "^2.1",
-    "langaner/route-priority": "^1.0"
+    "langaner/route-priority": "^1.0",
+	"nicolaslopezj/searchable": "1.*"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",

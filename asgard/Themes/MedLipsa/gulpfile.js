@@ -7,6 +7,7 @@
  */
 // Initialize Gulp
 var gulp = require('gulp');
+
 // Initialize Gutil
 var gutil = require('gulp-util');
 // Exec object for running shell scripts
@@ -40,28 +41,43 @@ var onError = function (err) {
  */
 var paths = {
     css: {
-        src: 'resources/scss/app.scss',
+        src: 'resources/scss/main.scss',
         dest: 'assets/css/'
     },
     js: {
         src: 'resources/js/**/*.js',
-        dest: 'assets/js/'
+        dest: 'assets/js/',
+        modules: 'assets/js/modules/*.js'
     },
     plugins: {
-        src: 'resources/vendor/**',
+        src: 'bower_components/**',
         css: 'assets/css/',
         js: 'assets/js/'
     },
     img: {
-        src : 'resources/img/**/*.{png,jpg,svg,gif,swf}',
+        src : 'resources/img/**/*.{png,jpg,svg,gif}',
         dest : 'assets/img/'
     },
 	fonts: {
-		vendors : 'resources/vendor/bootstrap/fonts/**',
 		src : 'resources/fonts/**',
 		dest : 'assets/fonts/',
-	}
+	},
+    files: {
+		src : 'resources/files/**',
+		dest : 'assets/files/',
+	},
+    html: {
+        watch : 'resources/**/*.html',
+		src : ['resources/**/*.html','!resources/content/**'],
+		dest : 'assets/',
+	},
+    iconfont: {
+        src: 'resources/iconfont/*.svg',
+        dest: 'assets/fonts/',
+    },
+	php_cli: '/c/wamp/bin/php/php5.5.29/php'
 };
+
 
 /**
  * Clean project
@@ -70,11 +86,6 @@ gulp.task('clean', function() {
     var toClean = [
         './.DS_Store',
         './**/.DS_Store',
-        paths.css.dest,
-		paths.fonts.dest,
-        paths.js.dest,
-		paths.img.dest,
-		paths.files.dest,
 		paths.html.dest
     ];
 
@@ -118,14 +129,14 @@ gulp.task('bower:compile', function() {
 		.pipe(plugins.newer(paths.plugins.js,paths.plugins.css))
         .pipe(plugins.sourcemaps.init())
         .pipe(cssFiles)
-        .pipe(plugins.groupConcat({'vendors.css': '**/*.css'}))
+        .pipe(plugins.groupConcat({'vendors.css': 'bower_components/**/*.css'}))
         .pipe(plugins.sourcemaps.write('.'))
 		.pipe(plugins.uglifycss())
         .pipe(gulp.dest(paths.plugins.css))
         .pipe(cssFiles.restore)
         .pipe(plugins.sourcemaps.init())
         .pipe(jsFiles)
-        .pipe(plugins.groupConcat({'vendors.js': '**/*.js'}))
+        .pipe(plugins.groupConcat({'vendors.js': 'bower_components/**/*.js'}))
 		.pipe(plugins.uglify())
         .pipe(plugins.sourcemaps.write('.'))
         .pipe(gulp.dest(paths.plugins.js));
@@ -137,7 +148,7 @@ gulp.task('bower:compile', function() {
  */
 gulp.task('build:styles', function () {
     var processors = [
-        plugins.autoprefixer({browsers:['last 2 versions']}),
+        plugins.autoprefixer({browsers:['> 1%']}),
         plugins.combineMq,
         plugins.postcssQuantityQueries
     ];
@@ -148,8 +159,10 @@ gulp.task('build:styles', function () {
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.sass({outputStyle: 'compressed'}))
   	.pipe(plugins.postcss(processors))
+  	.pipe(plugins.rename('app.min.css'))
     .pipe(plugins.sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.css.dest));
+    .pipe(gulp.dest(paths.css.dest))
+    .pipe(plugins.connect.reload());
 });
 
 
@@ -162,10 +175,11 @@ gulp.task('build:js', function() {
    	.pipe(plugins.plumber({errorHandler: onError}))
   	.pipe(plugins.newer(paths.js.dest))
     .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.groupConcat({'app.js': '**/*.js'}))
+    .pipe(plugins.groupConcat({'app.min.js': '**/*.js'}))
     .pipe(plugins.uglify())
     .pipe(plugins.sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.js.dest));
+    .pipe(gulp.dest(paths.js.dest))
+  	.pipe(plugins.connect.reload());
 });
 
 
@@ -184,13 +198,15 @@ gulp.task('build:images:development', function() {
         .pipe(plugins.plumber({errorHandler: onError}))
 		.pipe(plugins.newer(paths.img.dest))
         .pipe(plugins.imagemin(config))
-        .pipe(gulp.dest(paths.img.dest));
+        .pipe(gulp.dest(paths.img.dest))
+        .pipe(plugins.connect.reload());
 });
 
 // Copy favicon to /img
 gulp.task('copy:img', function() {
-    return gulp.src('resources/favicon.ico')
-        .pipe(gulp.dest('assets'));
+    return gulp.src('resources/img/favicon.ico')
+		.pipe(plugins.newer(paths.img.dest))
+        .pipe(gulp.dest(paths.img.dest));
 });
 
 
@@ -208,7 +224,37 @@ gulp.task('build:images:production', function() {
         .pipe(plugins.plumber({errorHandler: onError}))
 		.pipe(plugins.newer(paths.img.dest))
         .pipe(plugins.imagemin(config))
-        .pipe(gulp.dest(paths.img.dest));
+        .pipe(gulp.dest(paths.img.dest))
+        .pipe(plugins.connect.reload());
+});
+
+
+/**
+ * HTML
+ */
+gulp.task('build:html', function () {
+  return gulp.src(paths.html.src)
+  	.pipe(plugins.plumber({errorHandler: onError}))
+    .pipe(plugins.fileInclude({
+		filters: {
+			markdown: plugins.markdown.parse
+		}
+    }))
+    .pipe(gulp.dest(paths.html.dest))
+    .pipe(plugins.connect.reload());
+});
+
+gulp.task('build:html:newer', function () {
+  return gulp.src(paths.html.src)
+  	.pipe(plugins.plumber({errorHandler: onError}))
+    .pipe(plugins.newer(paths.html.dest))
+    .pipe(plugins.fileInclude({
+		filters: {
+			markdown: plugins.markdown.parse
+		}
+    }))
+    .pipe(gulp.dest(paths.html.dest))
+    .pipe(plugins.connect.reload());
 });
 
 
@@ -216,26 +262,76 @@ gulp.task('build:images:production', function() {
  * Fonts
  */
 gulp.task('copy:fonts', function () {
-  return gulp.src([paths.fonts.src, paths.fonts.vendors])
+  return gulp.src(paths.fonts.src)
   	.pipe(plugins.newer(paths.fonts.dest))
     .pipe(gulp.dest(paths.fonts.dest));
 });
 
+
+gulp.task('build:iconfont', function(){
+    return gulp.src(paths.iconfont.src, {base: 'resources/'})
+    .pipe(plugins.newer(paths.iconfont.dest))
+    .pipe(plugins.iconfontCss({
+        fontName: 'iconfont',
+        path: 'resources/scss/_template.scss',
+        targetPath: '../../resources/scss/_iconfont.scss',
+        fontPath: '../fonts/'
+    }))
+    .pipe(plugins.iconfont({
+        fontName: 'iconfont',
+        prependUnicode: true,
+        fontHeight: 1024,
+        formats: ['ttf', 'eot', 'woff', 'svg'],
+        normalize: true,
+        timestamp: Math.round(Date.now()/1000)
+    }))
+    .pipe(gulp.dest(paths.iconfont.dest));
+});
+
+
 /**
- * Connect
+ * Files
  */
+gulp.task('copy:files', function () {
+return gulp.src(paths.files.src)
+	.pipe(plugins.newer(paths.files.dest))
+    .pipe(gulp.dest(paths.files.dest));
+});
+
+
+/**
+ * Publish
+ */
+/*gulp.task('publish', function (cb) {
+  exec('_art.sh 2>&1', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});*/
 gulp.task('publish', function() {
 	gulp.src("").pipe(plugins.shell("php ../../artisan stylist:publish "+themeInfo.name));
 });
 
 /**
+ * Connect
+ */
+gulp.task('connect', function() {
+  plugins.connect.server({
+    root: 'dist',
+    livereload: true
+  });
+});
+
+
+/**
  * Sequences
  */
 // Development build
-gulp.task('developmentSequence', ['bower:compile', 'build:styles', 'build:js', 'build:images:development', 'copy:img', 'copy:fonts']);
+gulp.task('developmentSequence', ['bower:compile', 'build:styles', 'build:js', 'build:images:development', 'copy:img', 'copy:fonts', 'build:iconfont', 'copy:files']);
 
 // Production build
-gulp.task('productionSequence', ['bower:compile', 'build:styles', 'build:js', 'build:images:production', 'copy:img', 'copy:fonts']);
+gulp.task('productionSequence', ['bower:compile', 'build:styles', 'build:js', 'build:images:production', 'copy:img', 'copy:fonts', 'copy:files']);
 
 /**
  * Notices
@@ -249,26 +345,43 @@ gulp.task('notice:built', function() {
 /**
  * Watch
  */
-gulp.task('watch', ['developmentSequence'], function () {
-	var queue = plugins.watchSequence(300);
+gulp.task('watch', function () {
+    var queue = plugins.watchSequence(300);
 
 	gulp.watch(paths.plugins.src, queue.getHandler('bower:compile', 'publish'));
 	gulp.watch(paths.css.src, queue.getHandler('build:styles', 'publish'));
 	gulp.watch(paths.js.src, queue.getHandler('build:js', 'publish'));
 	gulp.watch(paths.img.src, queue.getHandler('build:images:development', 'publish'));
 	gulp.watch(paths.fonts.src, queue.getHandler('copy:fonts', 'publish'));
-	gulp.watch('./gulpfile.js', { interval: 500 }, ['default']);
+    gulp.watch(paths.iconfont.src, queue.getHandler('build:iconfont', 'publish'));
+	gulp.watch(paths.files.src, queue.getHandler('copy:files', 'publish'));
+	gulp.watch('gulpfile.js', { interval: 500 }, ['developmentSequence']);
+});
+
+//watch for minimal tasks
+gulp.task('watch-min', function () {
+    var queue = plugins.watchSequence(300);
+
+	gulp.watch(paths.css.src, queue.getHandler('build:styles', 'publish'));
+	gulp.watch(paths.js.src, queue.getHandler('build:js', 'publish'));
+	gulp.watch(paths.img.src, queue.getHandler('build:images:development', 'publish'));
+	gulp.watch(paths.files.src, queue.getHandler('copy:files', 'publish'));
 });
 
 /**
  * Main tasks
  */
 // Production build
+gulp.task('pub', function (cb) {
+	plugins.sequence('publish', 'notice:built', cb);
+});
+
+// Production build
 gulp.task('prod', function (cb) {
-	plugins.sequence('clean','productionSequence', 'publish', 'notice:built', cb);
+	plugins.sequence('clean','build:iconfont','productionSequence', 'publish', 'notice:built', cb);
 });
 
 //The default task (called when you run `gulp` from cli)
 gulp.task('default', function (cb) {
-	plugins.sequence('developmentSequence', 'watch', 'publish', 'notice:built', cb);
+	plugins.sequence('build:iconfont','developmentSequence', 'watch', 'publish', 'notice:built', cb);
 });

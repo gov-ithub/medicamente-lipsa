@@ -1,43 +1,26 @@
 {
-  "name": "beckson",
+  "name": "medicamentelipsa",
   "version": "1.0.0",
-  "description": "beckson",
-  "authors": "Vlad Manolache <vlad.m82@gmail.com>",
+  "description": "medicamentelipsa",
+  "authors": "Adrian Nitu <adrian.nitu@gmail.com>",
   "license": "MIT",
   "private": true,
-  "directory": "app/components/",
   "ignore": [
     "**/.*",
     "node_modules",
-    "/resources/vendor",
+    "bower_components",
     "test",
     "tests"
   ],
   "devDependencies": {
-    "jquery": "~2.1.1",
-    "bootstrap": "~3.3.6",
-    "jquery-validation": "git@github.com:jzaefferer/jquery-validation.git#~1.15.0",
-    "slick-carousel": "git@github.com:kenwheeler/slick.git#~1.5.9",
-    "bootstrap-switch": "git@github.com:nostalgiaz/bootstrap-switch.git#~3.3.2",
-    "jPlayer": "jplayer#~2.9.2",
-    "jquery-shoutcast": "git@github.com:Wavestreaming/jquery-shoutcast.git",
-    "jsmediatags": "~3.2.2"
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.6"
   },
   "overrides": {
     "bootstrap": {
       "main": [
         "dist/js/bootstrap.js",
         "dist/css/bootstrap.css"
-      ]
-    },
-    "jPlayer": {
-      "main": [
-        "dist/jplayer/jquery.jplayer.js"
-      ]
-    },
-    "jquery-shoutcast": {
-      "main": [
-        "jquery.shoutcast.js"
       ]
     }
   }

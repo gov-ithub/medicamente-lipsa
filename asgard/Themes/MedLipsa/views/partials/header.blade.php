@@ -1,4 +1,4 @@
-<head lang="ro">
+<head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>@section('title'){{ 'Medicamente Lipsa' }}@show</title>
@@ -27,17 +27,11 @@
 	<meta name="msapplication-config" content="{{ Theme::url('img/browserconfig.xml') }}">
 	<meta name="theme-color" content="#ffffff"> 
 
-    <!-- Bootstrap core CSS -->
-    <link href="{{ Theme::url('/css/bootstrap.css') }}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{{ Theme::url('/css/main.css') }}" rel="stylesheet">
-
    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Roboto:400,700" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700&subset=latin-ext' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin-ext" rel="stylesheet">
-
-    <script src="{{ Theme::url('js/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <script src="{{ Theme::url('js/smoothscroll.js') }}"></script>
+	
+	{!! Theme::style('css/vendors.css') !!}
+	{!! Theme::style('css/app.min.css') !!}
 
 </head>

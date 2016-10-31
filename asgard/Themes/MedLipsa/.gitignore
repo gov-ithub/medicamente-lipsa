@@ -1,3 +1,7 @@
 .idea/
 /node_modules
 /resources/vendor
+/bower_components/
+dist/
+nbproject/
+/npm-debug.log

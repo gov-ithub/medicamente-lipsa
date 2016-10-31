@@ -264,8 +264,8 @@ h2 {
 
 .fb-like { margin-top:10px;float:right; }
 .spacetop { margin-top:30px; }
-#search input { font-size:20px; padding:10px; width:50%; border:1px #b91e1e solid; }
-#search { margin-bottom:20px; }
+.search_form input { font-size:20px; padding:10px; width:50%; border:1px #b91e1e solid; }
+.search_form { margin-bottom:20px; }
 .share { font-size:18px; } 
 .navbar-fixed-top {     position: relative !important; }
 .navbar { margin-bottom:0px; }
