@@ -12,6 +12,6 @@ $router->group(['priority' => -10], function (Router $router) {
 
 	$router->get('/neeligibil', ['as' => 'public.respinse', 'uses' => 'PublicController@falseReports']);
 	
-	$router->get('/test-mail', ['as' => 'public.test1', 'uses' => 'PublicController@test1']);
+	$router->get('/test_r', ['as' => 'public.test1', 'uses' => 'PublicController@test1']);
 });
 

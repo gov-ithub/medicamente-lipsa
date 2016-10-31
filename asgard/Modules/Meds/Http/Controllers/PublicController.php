@@ -12,7 +12,7 @@ use Modules\Meds\Entities\Patient;
 use Modules\Meds\Entities\Med;
 use Modules\Meds\Entities\Contact;
 use Modules\Meds\Entities\Recipe;
-//use Modules\Meds\Entities\Reply;
+use Modules\Meds\Entities\Reply;
 
 class PublicController extends BasePublicController
 {
@@ -76,8 +76,26 @@ class PublicController extends BasePublicController
 	}
 	
 	public function test1(){
-		$row = $row = Patient::find(1);
-		return $this->sendNotification($row);
+		$replies = \Modules\Meds\Entities\Reply1::all();
+		$skipped = [];
+		foreach($replies as $r){
+			$p = Patient::find($r->patient_id);
+			if($p){
+				$reply = Reply::create([
+					'user_id' => 1,
+					'med_id' => $p->med->id,
+					'cause' => html_entity_decode($r->cause),
+					'action' => html_entity_decode($r->action),
+					'deadline' => $r->deadline,
+					'created_at' => $r->created_at,
+					'is_public' => 1
+				]);
+				$p->med->reply_id = $reply->id;
+				$p->med->save();
+			} else 
+				$skipped[] = $r;
+		}
+		dd($skipped);
 	}
 	
 	private function sendNotification($patient){

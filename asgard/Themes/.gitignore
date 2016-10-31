@@ -1,3 +1,14 @@
 /*
 !.gitignore
 !MedLipsa
+!Adminlte/
+Adminlte/*
+!Adminlte/assets/
+Adminlte/assets/*
+!Adminlte/assets/js/
+Adminlte/assets/js/*
+!Adminlte/assets/js/vendor/
+Adminlte/assets/js/vendor/*
+!Adminlte/assets/js/vendor/ckeditor/
+Adminlte/assets/js/vendor/ckeditor/*
+!Adminlte/assets/js/vendor/ckeditor/config.js
