@@ -18,12 +18,14 @@ function init(){
 			context: this,
 	//			dataType: 'json',
 			success: function(data){
-				$(this).data('submitting', false).removeClass('submitting');
+				$(this).data('submitting', false);
+				cdown.reset();
 				$("#ListaAnunturi").html(data);
 				resetTimers();
+				FB.XFBML.parse();
 			},
 			error: function(xhr) {
-				$(this).data('submitting', false).removeClass('submitting');
+				$(this).data('submitting', false);
 
 			}
 		});

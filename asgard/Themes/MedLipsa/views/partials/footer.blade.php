@@ -1,4 +1,4 @@
-<footer class="container">
+<footer>
 	 <div class="row">
     	<div class="col-md-6 footer">
         	Proiect comun al:

@@ -8,13 +8,18 @@ var CDown = function() {
 	this.state=0;// if initialized
 	this.counts=[];// array holding countdown date objects and id to print to {d:new Date(2013,11,18,18,54,36), id:"countbox1"}
 	this.interval=null;// setInterval object
-}
+};
 
 CDown.prototype = {
 	init: function(){
 		this.state=1;
 		var self=this;
 		this.interval=window.setInterval(function(){self.tick();}, 1000);
+	},
+	reset: function(){
+		this.state=0;
+		this.counts=[];
+		this.interval=null;
 	},
 	add: function(date,id){
 		this.counts.push({d:date,id:id});
