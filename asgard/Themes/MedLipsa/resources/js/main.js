@@ -10,7 +10,7 @@ function init(){
 		debug: true,
 		autoTrigger: true,
 		nextSelector: 'a.next_page',
-		loadingHtml: '<small>Se încarcă...</small>',
+		loadingHtml: '<div class="center cssload-jumping"><i></i><i></i><i></i><i></i><i></i></div>',
 		autoTriggerUntil: 5,
 //		nextSelector: '.pagination li.active + li a',
 //		contentSelector: '#ListaAnunturi',

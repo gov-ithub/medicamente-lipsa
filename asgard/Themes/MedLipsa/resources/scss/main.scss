@@ -276,3 +276,41 @@ h2 {
 .logo-ms { padding-top:5px; }
 
 .check label { display:inline; font-weight:normal;}
+
+.cssload-jumping{
+	position:relative; display:block;
+	box-sizing: border-box;
+	margin: 0 auto;
+	
+	i {
+		display: inline-block;
+		height: 12px; width: 12px;
+		margin: 0 3px; 
+		background: rgb(54,130,224);
+		//border-radius: 487px;
+		box-sizing: border-box;
+		background-clip: padding-box;
+		&:nth-child(1) {
+			animation: scale 1.15s 0.12s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+		}
+		&:nth-child(2) {
+			animation: scale 1.15s 0.23s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+		}
+		&:nth-child(3) {
+			animation: scale 1.15s 0.35s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+		}
+		&:nth-child(4) {
+			animation: scale 1.15s 0.46s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+		}
+		&:nth-child(5) {
+			animation: scale 1.15s 0.58s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+		}
+	}
+}
+
+@keyframes scale {
+	0%	{ transform: scale(0); }
+	25% { transform: scale(0.9, 0.9); background: rgb(130,186,255); }
+	50% { transform: scale(1, 1); margin: 0 8px; background: rgb(54,130,224); }
+	100% { transform: scale(0); }
+}

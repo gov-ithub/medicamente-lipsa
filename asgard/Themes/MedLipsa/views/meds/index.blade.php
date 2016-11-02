@@ -73,15 +73,15 @@
 <div class="col-md-12" id="ListaAnunturi">
 	@include('meds.partials.paged_meds')
 </div>
-  <div class="row">
+<!--  <div class="row">
 	<div class="col-md-8 col-md-offset-2 center">
 		
 		<a href="{{ route('public.cerere') }}" class="report">Anunță lipsa unui medicament</a>
 	</div>
-  </div>
+  </div>-->
 
 <div class="row">
-	<div class="col-md-8 col-md-offset-2 center">
+	<div class="col-md-8 col-md-offset-2 center spacetop">
 		Dacă ai idei de îmbunătățire a accesului la medicamente esențiale, scrie-ne la adresa <strong>ministru@ms.ro</strong><br><br>
 	</div>
 </div>
