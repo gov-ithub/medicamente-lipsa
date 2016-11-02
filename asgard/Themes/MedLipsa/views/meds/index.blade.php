@@ -8,10 +8,24 @@
 		<h1>PENTRU PERSONAL MEDICAL, PACIENȚI ȘI ASOCIAȚII/FUNDAȚII</h1>
 
 		<div class="row">
-			<div class="col-md-6">
+<!--			<div class="col-md-6">
 			<p>Pentru a sesiza lipsa unuia sau mai multor medicamente completați acest formular:</p>
 				<a href="{{ route('public.cerere') }}" class="report">Anunță lipsa unui medicament</a>
+			</div>-->
+			<div class="col-md-6">
+			<p>Pentru a sesiza lipsa unuia sau mai multor medicamente completați acest formular:</p>
+				{!! Form::open(['route' => ['public.med.cauta'], 'method' => 'post', 'class' => 'search_group', 'role' => 'search']) !!}
+				<div class="input-group col-md-10 col-md-offset-1{{ $errors->has('med_name') ? ' has-error' : '' }}">
+					<!--<input type="text" class="" placeholder="Search" name="srch-term" id="srch-term">-->
+					{!! Form::text("med_name", old("med_name", ''), ['class' => '', 'placeholder' => "Anunță un medicament"]) !!}
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-plus"></i></button>
+					</div>
+				</div>
+				{!! $errors->first('med_name', '<span class="help-block">:message</span>') !!}
+				{!! Form::close() !!}
 			</div>
+
 			<div class="col-md-6">   
 				<p>Verifică stocul de medicamente oncologice la nivelul spitalelor cu structuri in specialitatea oncologie:</p>
 
@@ -43,7 +57,7 @@
 </div>
 <div class="row">
 	<!--<h1>Caută in anunțuri</h1>-->
-	{!! Form::open(['route' => ['meds.search'], 'method' => 'get', 'class' => 'search_form', 'role' => 'search']) !!}
+	{!! Form::open(['route' => ['meds.search'], 'method' => 'get', 'class' => 'search_form search_group', 'role' => 'search']) !!}
 		<div class="input-group col-md-6 col-md-offset-3">
 			<!--<input type="text" class="" placeholder="Search" name="srch-term" id="srch-term">-->
 			{!! Form::text("q", old("q", (isset($queryString) ? $queryString : '')), ['class' => 'filterinput', 'placeholder' => "Caută în anunțuri"]) !!}
@@ -70,5 +84,5 @@
 		Dacă ai idei de îmbunătățire a accesului la medicamente esențiale, scrie-ne la adresa <strong>ministru@ms.ro</strong><br><br>
 	</div>
 </div>
-
+</div>
 @stop

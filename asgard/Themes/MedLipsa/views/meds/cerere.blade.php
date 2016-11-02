@@ -54,6 +54,7 @@
 				'name' => 'med[name]', 'class'=>'row',
 				'label' => 'Denumire comercială*',
 				'placeholder' => '',
+				'value' => Session::pull('med_name', ''),
 			]
 		])
 		@include('partials.fields.text',

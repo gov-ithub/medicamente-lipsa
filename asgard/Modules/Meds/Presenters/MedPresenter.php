@@ -21,26 +21,22 @@ class MedPresenter extends Presenter
 	 *						false - carbon object
 	 * @param type $forJs	*1000, only of $ts is true
 	 */
-	public function causeDeadline($ts = true, $forJs = true) {
+	public function causeDeadline($ts = true) {
 		$ddl = $this->entity->created_at->copy()
 				->addWeekdays($this->causePeriod)
 					->hour($this->entity->created_at->hour)
 					->minute($this->entity->created_at->minute)
 					->second($this->entity->created_at->second);
-		if(!$ts)
-			return $ddl;
-		return $ddl->timestamp * ($forJs ? 1000 : 1);
+		return $ts ? $ddl->timestamp : $ddl;
 	}
-	public function actionDeadline($ts = true, $forJs = true) {
+	public function actionDeadline($ts = true) {
 		$ddl = $this->entity->created_at->copy()
 				->addWeekdays($this->causePeriod)
 				->addDays($this->actionPeriod)
 					->hour($this->entity->created_at->hour)
 					->minute($this->entity->created_at->minute)
 					->second($this->entity->created_at->second);
-		if(!$ts)
-			return $ddl;
-		return $ddl->timestamp * ($forJs ? 1000 : 1);
+		return $ts ? $ddl->timestamp : $ddl;
 	}
 
 

@@ -1,13 +1,14 @@
 <?php namespace Modules\Meds\Http\Controllers;
 
 use Modules\Core\Http\Controllers\BasePublicController;
+use Modules\User\Entities\Sentinel\User;
+use Illuminate\Mail\Mailer;
+
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
-
-use Illuminate\Mail\Mailer;
-use Modules\User\Entities\Sentinel\User;
-
 use Modules\Meds\Http\Requests\CreateMedRequest;
+use Modules\Meds\Http\Requests\SearchMedRequest;
+
 use Modules\Meds\Entities\Patient;
 use Modules\Meds\Entities\Med;
 use Modules\Meds\Entities\Contact;
@@ -18,6 +19,7 @@ class PublicController extends BasePublicController
 {
 	private $mailer;
 	
+	//TODO: redo all CRUD with repository
 	public function __construct(Mailer $mailer) {
         parent::__construct();
 		$this->mailer = $mailer;
@@ -94,6 +96,16 @@ class PublicController extends BasePublicController
 		return view($request->ajax() ? 'meds.partials.search_results' : 'meds.search')->with(compact('meds', 'queryString'));
 	}
 	
+	public function searchMedName(SearchMedRequest $request) {
+		$medName = trim($request->all()['med_name']);
+		\Session::flash('med_name', $medName);
+		$meds = Med::like('name', $medName)->get();
+		if(!$meds->count())
+			return redirect()->route('public.cerere');
+
+		return view('meds.search_add')->with(compact('meds', 'medName'));
+	}
+	
 	//copy replies from prev. version
 	public function test1(){
 		$replies = \Modules\Meds\Entities\Reply1::all();
@@ -117,16 +129,7 @@ class PublicController extends BasePublicController
 		}
 		dd($skipped);
 	}
-	
-	public function test2() {
-		$p = Patient::find(336);
-		$ddl = $p->created_at->copy()->addWeekdays(4+7)
-				->hour($p->created_at->hour)
-				->minute($p->created_at->minute)
-				->second($p->created_at->second);
-		dd($ddl, $p->created_at);
-	}
-	
+		
 	private function sendNotification($patient){
 		$admins = User::lists('email')->toArray();
 //		dd($admins);

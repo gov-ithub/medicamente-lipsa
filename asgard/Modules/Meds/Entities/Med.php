@@ -84,4 +84,8 @@ class Med extends Model
 		$auth = app('Modules\Core\Contracts\Authentication');
 		return $this->hasOne(Reply::class, 'med_id')->where('user_id', $auth->check()->id);
     }
+	
+	public  function scopeLike($query, $field, $value){
+        return $query->where($field, 'LIKE', "%$value%");
+	}
 }
