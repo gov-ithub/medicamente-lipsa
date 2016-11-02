@@ -9,10 +9,12 @@ function init(){
 	$('#ListaAnunturi').jscroll({
 		debug: true,
 		autoTrigger: true,
-		nextSelector: '.pagination li.active + li a',
-		contentSelector: '#ListaAnunturi',
+		nextSelector: 'a.next_page',
+		loadingHtml: '<small>Se încarcă...</small>',
+		autoTriggerUntil: 5,
+//		nextSelector: '.pagination li.active + li a',
+//		contentSelector: '#ListaAnunturi',
 		callback: function() {
-
 			//again hide the paginator from view
 			$('ul.pagination:visible:first').hide();
 
@@ -42,6 +44,23 @@ function init(){
 
 			}
 		});
+	});
+	
+	$( "#pasul1" ).click(function() {
+		$("#pagina-2").removeClass("hidden");
+		$("#pasul1").addClass("hidden");
+		$("html, body").animate({ scrollTop: $("#pagina-2").offset().top }, 600);
+	});
+	$( "#persoana-contact" ).click(function() {
+		$("#pagina-persoana").removeClass("hidden");
+		$("#persoana-contact").addClass("hidden");
+		//$(document).scrollTop( $("#pagina-persoana").offset().top );
+		 $("html, body").animate({ scrollTop: $("#pagina-persoana").offset().top }, 600);
+	});
+	$( "#pasul2" ).click(function() {
+		$("#pagina-3").removeClass("hidden");
+		$("#pasul2").addClass("hidden");
+		$("html, body").animate({ scrollTop: $("#pagina-3").offset().top }, 600);
 	});
 }
 

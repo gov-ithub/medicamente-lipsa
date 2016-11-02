@@ -1,27 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-<script>
-	$( document ).ready(function() {
-    	$( "#pasul1" ).click(function() {
- 		 	$("#pagina-2").removeClass("hidden");
-			$("#pasul1").addClass("hidden");
-			$("html, body").animate({ scrollTop: $("#pagina-2").offset().top }, 600);
-		});
-		$( "#persoana-contact" ).click(function() {
- 		 	$("#pagina-persoana").removeClass("hidden");
-			$("#persoana-contact").addClass("hidden");
-			//$(document).scrollTop( $("#pagina-persoana").offset().top );
-			 $("html, body").animate({ scrollTop: $("#pagina-persoana").offset().top }, 600);
-		});
-		$( "#pasul2" ).click(function() {
- 		 	$("#pagina-3").removeClass("hidden");
-			$("#pasul2").addClass("hidden");
-			$("html, body").animate({ scrollTop: $("#pagina-3").offset().top }, 600);
-		});
-	});
-</script>
-	
 <div class="container">
 	<div class="row">
     <div class="col-md-12">

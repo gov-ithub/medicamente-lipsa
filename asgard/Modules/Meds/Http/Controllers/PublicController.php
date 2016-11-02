@@ -32,6 +32,9 @@ class PublicController extends BasePublicController
 						->orderBy('created_at', 'desc')
 							->paginate(10);
 
+		if (\Request::ajax()) {
+			return view('meds.partials.paged_meds')->with(compact('patients'))->render();
+		}
 		return view('meds.index')->with(compact('patients'));
 	}
 	

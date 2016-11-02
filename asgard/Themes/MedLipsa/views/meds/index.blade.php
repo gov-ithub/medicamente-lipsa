@@ -71,13 +71,14 @@
   <div class="row blue spacetop"></div>
 
 <div class="col-md-12" id="ListaAnunturi">
-	@foreach($patients as $patient)
-		@include('meds.partials.med_element', ['med' => $patient->med])
-	@endforeach
+	@include('meds.partials.paged_meds')
+</div>
+  <div class="row">
 	<div class="col-md-8 col-md-offset-2 center">
+		
 		<a href="{{ route('public.cerere') }}" class="report">Anunță lipsa unui medicament</a>
 	</div>
-</div>
+  </div>
 
 <div class="row">
 	<div class="col-md-8 col-md-offset-2 center">
