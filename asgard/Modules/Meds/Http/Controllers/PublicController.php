@@ -30,7 +30,7 @@ class PublicController extends BasePublicController
 	public function index() {
 		$patients = Patient::where('status', 1)
 						->orderBy('created_at', 'desc')
-							->take(10)->get();
+							->paginate(10);
 
 		return view('meds.index')->with(compact('patients'));
 	}

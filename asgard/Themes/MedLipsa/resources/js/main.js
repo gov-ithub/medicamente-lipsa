@@ -5,7 +5,20 @@ function init(){
 			var id = $(this).data('id');
 			$('a.buton-situatia[data-id='+id+'],.sit[data-id='+id+']').toggleClass("hidden");
 	});
-	
+
+	$('#ListaAnunturi').jscroll({
+		debug: true,
+		autoTrigger: true,
+		nextSelector: '.pagination li.active + li a',
+		contentSelector: '#ListaAnunturi',
+		callback: function() {
+
+			//again hide the paginator from view
+			$('ul.pagination:visible:first').hide();
+
+		}
+	});
+		
 	$("form.search_form").on('submit', function(e){
 		e.preventDefault();
 		if($(this).data('submitting'))
