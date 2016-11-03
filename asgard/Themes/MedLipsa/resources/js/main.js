@@ -10,11 +10,13 @@ function init(){
 		debug: true,
 		autoTrigger: true,
 		nextSelector: 'a.next_page',
-		loadingHtml: '<div class="center cssload-jumping"><i></i><i></i><i></i><i></i><i></i></div>',
+		loadingHtml: '<div class="center loader-dots"><i></i><i></i><i></i><i></i><i></i></div>',
 		autoTriggerUntil: 5,
 //		nextSelector: '.pagination li.active + li a',
 //		contentSelector: '#ListaAnunturi',
 		callback: function() {
+				resetTimers();
+				FB.XFBML.parse();
 			//again hide the paginator from view
 			$('ul.pagination:visible:first').hide();
 
