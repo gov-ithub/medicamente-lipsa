@@ -3,6 +3,6 @@
 @endforeach
 <div class="center">
 	<!--<div class="cssload-jumping"><i></i><i></i><i></i><i></i><i></i></div>-->
-	<a href="{{ $patients->nextPageUrl() }}" class="next_page">Vezi mai multe...</a>
+	<div class="col-md-6 col-md-offset-3"><a href="{{ $patients->nextPageUrl() }}" class="report">Vezi mai multe...</a></div>
 </div>
 

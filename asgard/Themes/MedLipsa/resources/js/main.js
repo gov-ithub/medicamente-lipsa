@@ -1,4 +1,4 @@
-function init(){
+function init(){ 
 	resetTimers();
 	
 	$("#ListaAnunturi").on('click', 'a.buton-situatia', function(e){

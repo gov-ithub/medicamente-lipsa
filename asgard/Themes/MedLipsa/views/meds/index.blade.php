@@ -12,27 +12,29 @@
 			<p>Pentru a sesiza lipsa unuia sau mai multor medicamente completați acest formular:</p>
 				<a href="{{ route('public.cerere') }}" class="report">Anunță lipsa unui medicament</a>
 			</div>-->
-			<div class="col-md-6">
-			<p>Pentru a sesiza lipsa unuia sau mai multor medicamente completați acest formular:</p>
+			<div class="col-md-8 col-md-offset-2">
+			<p>Pentru a sesiza lipsa unui medicament completați în câmpul de mai jos denumirea comercială:</p>
 				{!! Form::open(['route' => ['public.med.cauta'], 'method' => 'post', 'class' => 'search_group', 'role' => 'search']) !!}
 				<div class="input-group col-md-10 col-md-offset-1{{ $errors->has('med_name') ? ' has-error' : '' }}">
 					<!--<input type="text" class="" placeholder="Search" name="srch-term" id="srch-term">-->
-					{!! Form::text("med_name", old("med_name", ''), ['class' => '', 'placeholder' => "Anunță un medicament"]) !!}
+					{!! Form::text("med_name", old("med_name", ''), ['class' => '', 'placeholder' => "Denumire comercială"]) !!}
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-plus"></i></button>
+						<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-plus"></i> Anunță</button>
 					</div>
 				</div>
 				{!! $errors->first('med_name', '<span class="help-block">:message</span>') !!}
 				{!! Form::close() !!}
 			</div>
-
+		<!--
 			<div class="col-md-6">   
 				<p>Verifică stocul de medicamente oncologice la nivelul spitalelor cu structuri in specialitatea oncologie:</p>
 
 				<a href="http://ms.ro/?pag=178&%20id=16278" class="report" target="_blank">Verifică stocul</a>
 
 			</div>
+        -->
 		</div>
+        
 		<h1>Pentru fiecare medicament lipsă anunțat, Ministerul Sănătății va pune la dispoziție:</h1>
 		<div class="row">
 			<div class="col-md-4">
@@ -42,7 +44,7 @@
 			</div>
 			<div class="col-md-4 ">
 				<img src="{{ Theme::url('img/circle2.png') }}">
-				<p>măsurile pe care autoritățile statului le întreprind pentru rezolvarea situației </p>
+				<p>de la evaluarea situației, măsurile pe care autoritățile statului le întreprind pentru rezolvarea situației </p>
 			</div>
 			<div class="col-md-4">
 				<img src="{{ Theme::url('img/circle3.png') }}">
