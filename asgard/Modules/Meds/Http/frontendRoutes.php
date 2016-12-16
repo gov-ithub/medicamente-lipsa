@@ -16,7 +16,7 @@ $router->group(['priority' => -10], function (Router $router) {
 	
 	$router->get('/search', ['as' => 'meds.search', 'uses' => 'PublicController@search']);
 	
-	$router->get('/import-replies', ['as' => 'public.import.replies', 'middleware' => 'logged.in', 'uses' => 'PublicController@importReplies']);
+//	$router->get('/import-replies', ['as' => 'public.import.replies', 'middleware' => 'logged.in', 'uses' => 'PublicController@importReplies']);
 
 });
 
