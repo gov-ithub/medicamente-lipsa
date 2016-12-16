@@ -43,6 +43,9 @@ class Patient extends Model
 	public function recipe() {
 		return $this->hasOne(Recipe::class, 'patient_id');
     }
+	public function notifications() {
+		return $this->hasMany(Notification::class, 'patient_id');
+    }
 //	public function reply() {
 //		return $this->hasOne(Reply::class, 'patient_id');
 //    }

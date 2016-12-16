@@ -8,6 +8,14 @@
 		text-align: center;
 		padding: 0.3em 0.6em 0.2em;
 	}
+	
+	td ul {
+		padding: 0;
+	}
+	
+	td .btn-group {
+		display: flex;
+	}
 </style>
 @stop
 
@@ -49,11 +57,11 @@
 					<tr>
 						<th>Id</th>
 						<th>Status</th>
-						<th>Pacient</th>
+						<th style="width: 28%;">Pacient</th>
 						<!--<th>Categ.</th>-->
 						<th>Medicament</th>
 						<th>Adăugat la</th>
-						<th>Răspunsuri</th>
+						<th style="width: 10%;">Răspunsuri</th>
 						<th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
 					</tr>
 					</thead>
@@ -91,7 +99,7 @@
 						<td>
 							<ul>
 							@foreach($patient->med->replies as $reply)
-								<li>{{$reply->user->present()->fullname}}</li>
+								<li class='label label-primary'>{{$reply->user->present()->fullname}}</li>
 							@endforeach
 							</ul>
 						</td>

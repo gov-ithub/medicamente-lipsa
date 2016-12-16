@@ -6,10 +6,12 @@ use Illuminate\Mail\Mailer;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\Meds\Http\Requests\SubscribeMedRequest;
 use Modules\Meds\Http\Requests\CreateMedRequest;
 use Modules\Meds\Http\Requests\SearchMedRequest;
 
 use Modules\Meds\Entities\Patient;
+use Modules\Meds\Entities\Notification;
 use Modules\Meds\Entities\Med;
 use Modules\Meds\Entities\Contact;
 use Modules\Meds\Entities\Recipe;
@@ -46,6 +48,13 @@ class PublicController extends BasePublicController
 		return view('meds.false-reports', [
 				'medPackage' => Med::$packageList,
 			])->with(compact('patients'));
+	}
+	public function subscribeRequest(SubscribeMedRequest $request) {
+		$patient = Patient::findOrFail((int) $request->all()['patient_id']);
+		$patient->notifications()->create([
+			'email' => $request->all()['email']
+		]);
+		return 'saved!';
 	}
 	
 	public function newRequest() {
@@ -110,7 +119,7 @@ class PublicController extends BasePublicController
 	}
 	
 	//copy replies from prev. version
-	public function test1(){
+	public function importReplies(){
 		$replies = \Modules\Meds\Entities\Reply1::all();
 		$skipped = [];
 		foreach($replies as $r){

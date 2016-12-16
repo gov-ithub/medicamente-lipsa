@@ -3,17 +3,15 @@
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
-class Recipe extends Model
+class Notification extends Model
 {
 //    use Translatable;
 
-    protected $table = 'meds__recipes';
+    protected $table = 'meds__notifications';
 //    public $translatedAttributes = [];
 	protected $fillable = [
-		'required',
-		'issued_by',
-		'doctor',
-		'phone',
+		'patient_id',
+		'email',
 		'created_at',
 	];
 	public function patient() {

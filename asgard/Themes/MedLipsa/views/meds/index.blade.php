@@ -81,7 +81,18 @@
 		<a href="{{ route('public.cerere') }}" class="report">Anunță lipsa unui medicament</a>
 	</div>
   </div>-->
-
+    <div id="subscribe-content" class="hide">
+		{!! Form::open(['route' => ['public.subscribe'], 'method' => 'post', 'class' => 'subscribe_form', 'role' => 'form']) !!}
+          <input name='patient_id' type="hidden" value=''>
+		  <span>Dacă vrei să urmăreşti răspunsul acestui anunţ lasă-ne adresa de mail:</span>
+		  <div class='form-group'>
+			<div class="input-group">
+			  <input name='email' type="text" placeholder="Email" class="form-control">
+			  <div class='input-group-btn'><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button></div>                                  
+			</div>
+		  </div>
+		{!! Form::close() !!}
+    </div>
 <div class="row">
 	<div class="col-md-8 col-md-offset-2 center spacetop">
 		Dacă ai idei de îmbunătățire a accesului la medicamente esențiale, scrie-ne la adresa <strong>ministru@ms.ro</strong><br><br>

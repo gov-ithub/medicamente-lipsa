@@ -248,6 +248,23 @@ h2 {
 	p { line-height:1.2em; margin-bottom: 15px;}
 	li p { margin-bottom: 0;}
 }
+.btn-subscribe {
+	float: left;
+    background: none;
+    font-size: 22px;
+    padding: 0;
+	    margin: 0 4px -4px 0;
+    color: #b91e1e;
+}
+.popover.bottom {
+	border-radius: 0 !important;
+	.input-group{
+		margin: 6px 0;
+		* {
+			border-radius: inherit;
+		}
+	}
+}
 
 .container-fluid { background-color:#FFF; }
 .deadline { font-weight:bold; color:#b91e1e;}

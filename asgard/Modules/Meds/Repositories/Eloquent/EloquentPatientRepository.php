@@ -28,10 +28,10 @@ class EloquentPatientRepository extends EloquentBaseRepository implements Patien
 			$data['reply']['deadline'] = null;
         $patient->med->myReply()->update(array_get($data, 'reply', []));
 		if($this->auth->check()->hasRoleName('Admin')){
-			$patient->med->reply_id = (bool) $data['reply']['is_public'] ? $patient->med->myReply->id : null;
+			$patient->med->reply_id = $data['reply']['is_public'] ? $patient->med->myReply->id : null;
 			$patient->med->save();
 		}
-		
+//		$patient->push();
         return $patient;
     }
 }

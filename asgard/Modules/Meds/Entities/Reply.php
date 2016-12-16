@@ -16,7 +16,7 @@ class Reply extends Model
 		'cause',
 		'action',
 		'deadline',
-//		'is_public',
+		'is_public',
 		'created_at',
 	];
     protected $casts = [

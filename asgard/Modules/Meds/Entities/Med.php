@@ -42,6 +42,7 @@ class Med extends Model
 	protected $presenter = MedPresenter::class;
 //    public $translatedAttributes = [];
 	protected $fillable = [
+		'reply_id',
 		'name',
 		'category',
 		'active_sub',

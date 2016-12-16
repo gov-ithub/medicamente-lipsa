@@ -30,7 +30,8 @@
 				<div class="col-md-1"><img src="{{ Theme::url('/img/time.svg') }}" class="icon-list"></div>
 				<div class="col-md-5">
 					<div>Măsura în maxim:</div>
-					<p class="timer" id="m{{ $med->id }}" data-ts='{{ $med->present()->actionDeadline }}'></p> 
+				{{--	<a class='btn btn-subscribe' data-placement="bottom" data-toggle="popover" title="Notificare" data-container="body" type="button" data-pid='{{$med->patient->id}}' data-html="true" href='javascript:void(0)'><span class="glyphicon glyphicon-envelope"></span> </a> --}}
+					<p class="timer" id="m{{ $med->id }}" data-ts='{{ $med->present()->actionDeadline }}'></p>
 				</div>
 			</div>
 			@endif
@@ -58,7 +59,7 @@
 					@if(trim($med->publicReply->cause))
 						<a class="buton-situatia" data-id='{{ $med->id }}'> Vezi situaţia iniţială</a><br>
 					@endif
-					Distribuie această măsură <div class="fb-share-button" data-href="{{url().'#'.$med->patient->id}}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php">Share</a></div>
+				{{--	Distribuie această măsură <div class="fb-share-button" data-href="{{url().'#'.$med->patient->id}}" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php">Share</a></div> --}}
 
 					<div class="hidden sit" data-id='{{ $med->id }}'><br>
 						<strong>Situaţia iniţială:</strong>
@@ -82,7 +83,8 @@
 			</div>
 			<div class="col-md-5">
 				<div>Primul răspuns în maxim:</div>
-					<p class="timer" id="d{{ $med->id }}" data-ts='{{ $med->present()->actionDeadline }}'></p> 
+				{{--	<a class='btn btn-subscribe' data-placement="bottom" data-toggle="popover" title="Notificare" data-container="body" type="button" data-pid='{{$med->patient->id}}' data-html="true" href='javascript:void(0)'><span class="glyphicon glyphicon-envelope"></span> </a> --}}
+					<p class="timer" id="d{{ $med->id }}" data-ts='{{ $med->present()->causeDeadline }}'></p> 
 				</div>
 		</div>
 	@endif
