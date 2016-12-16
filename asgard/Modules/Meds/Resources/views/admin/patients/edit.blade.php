@@ -257,7 +257,19 @@
 				</div>
 			</div>			
 		</div>
-		
+
+		<div class="col-md-7">
+		@include('meds::admin.patients.partials.fields.select',
+			['field' => [
+				'name' => 'status',
+				'label' => 'Status anunt',
+				'placeholder' => '',
+				'value' => $patient->status,
+				'options' => $statuses
+			]
+		])	
+		</div>
+	
 		<!--raspunsuri-->
 		<div class="panel-group col-md-12">
 		@foreach($patient->med->replies as $reply)
