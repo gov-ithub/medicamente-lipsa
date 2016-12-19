@@ -3,6 +3,11 @@
 !Meds
 !User/
 User/*
+!User/Http/
+User/Http/*
+!User/Http/Controllers/
+User/Http/Controllers/*
+!User/Http/Controllers/AuthController.php
 !User/Resources/
 User/Resources/*
 !User/Resources/views/
