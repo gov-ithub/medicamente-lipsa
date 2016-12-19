@@ -75,7 +75,7 @@ class AuthController extends BasePublicController
 			if (config('asgard.user.users.allow_user_registration', true))
 				return redirect()->route('login');
 			else
-				return redirect('/')->route('dashboard.index');
+				return redirect()->route('dashboard.index');
         }
         flash()->error(trans('user::messages.there was an error with the activation'));
 
