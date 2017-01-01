@@ -83,7 +83,12 @@ class Med extends Model
 	
 	public function myReply() {
 		$auth = app('Modules\Core\Contracts\Authentication');
-		return $this->hasOne(Reply::class, 'med_id')->where('user_id', $auth->check()->id);
+		if($auth->check()->hasRoleName('Admin')) {
+			$adminIds = app('Modules\User\Repositories\RoleRepository')
+							->findByName('Admin')->users->pluck('id')->toArray();
+			return $this->hasOne(Reply::class, 'med_id')->whereIn('user_id', $adminIds);
+		} else
+			return $this->hasOne(Reply::class, 'med_id')->where('user_id', $auth->check()->id);
     }
 	
 	public  function scopeLike($query, $field, $value){
