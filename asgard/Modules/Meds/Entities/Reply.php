@@ -2,6 +2,7 @@
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Event;
 
 class Reply extends Model
 {
@@ -23,6 +24,17 @@ class Reply extends Model
         'deadline' => 'datetime',
         'is_public' => 'boolean',
     ];
+	
+	public static function boot() {
+		parent::boot();
+
+		static::updated(function($reply) {
+			$auth = app('Modules\Core\Contracts\Authentication');
+			if($auth->check()->hasRoleName('Admin') && $reply->is_public)
+				Event::fire('reply.updated', $reply);
+		});
+	}
+
 	public function meds() {
 		return $this->HasMany(Med::class, 'reply_id');
     }

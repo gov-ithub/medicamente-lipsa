@@ -33,7 +33,7 @@ class Patient extends Model
 		'allow_contact',
 		'created_at',
 	];
-	
+
 	public function med() {
 		return $this->hasOne(Med::class, 'patient_id');
     }

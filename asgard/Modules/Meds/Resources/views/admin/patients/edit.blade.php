@@ -1,9 +1,7 @@
 @extends('layouts.master')
 
 @section('content-header')
-    <h1>
-        {{ trans('meds::patients.title.edit patient') }}
-    </h1>
+    <h1>Editare anunţ</h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
         <li><a href="{{ route('admin.meds.patient.index') }}">{{ trans('meds::patients.title.patients') }}</a></li>
@@ -23,6 +21,15 @@
 
 @section('content')
     {!! Form::open(['route' => ['admin.meds.patient.update', $patient->id], 'method' => 'put']) !!}
+    <div class="row" style="border-bottom: 2px solid #ccd; margin-bottom: 15px;">
+		<div class="col-md-12 form-group form-inline{{ $errors->has('status') ? ' has-error' : '' }}">
+		   {!! Form::label('status', 'Status ', ['class' => 'control-label']) !!}
+		   <div class="input-group col-md-4 col-xs-8">
+			   {!! Form::select('status', $statuses, old('status', $patient->status), ['class' => 'form-control']) !!}
+		   </div>
+		   {!! $errors->first('status', '<span class="help-block">:message</span>') !!}
+		</div>		
+	</div>
     <div class="row">
         <div class="col-md-7">
 		<div class="panel panel-primary">
