@@ -32,6 +32,7 @@ class Patient extends Model
 		'role',
 		'allow_contact',
 		'created_at',
+		'status',
 	];
 	
 	public function med() {
